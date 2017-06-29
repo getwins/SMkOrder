@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-29 16:21:02 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="stockhh" dynamic-insert="false" dynamic-update="false" mutable="true" name="entity.PdPay" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="pd_pay">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="memberId" optimistic-lock="true" type="int" unique="false">
+            <column name="member_id" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="amount" optimistic-lock="true" type="double" unique="false">
+            <column name="amount" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="amountUsd" optimistic-lock="true" type="double" unique="false">
+            <column name="amount_usd" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="orderId" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="order_id" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="tp" optimistic-lock="true" type="short" unique="false">
+            <column name="tp" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="sta" optimistic-lock="true" type="short" unique="false">
+            <column name="sta" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="fundsType" optimistic-lock="true" type="short" unique="false">
+            <column name="funds_type" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="admin" optimistic-lock="true" type="short" unique="false">
+            <column name="admin" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="exchage" optimistic-lock="true" type="double" unique="false">
+            <column name="exchage" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="creatTime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="creat_time" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

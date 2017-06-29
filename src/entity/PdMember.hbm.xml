@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-29 16:21:02 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="stockhh" dynamic-insert="false" dynamic-update="false" mutable="true" name="entity.PdMember" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="pd_member">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="userName" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="user_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="userPass" optimistic-lock="true" type="string" unique="false">
+            <column length="32" name="user_pass" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="userNick" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="user_nick" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="closeLine" optimistic-lock="true" type="double" unique="false">
+            <column name="close_line" not-null="true" precision="22" scale="0">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="userFunds" optimistic-lock="true" type="big_decimal" unique="false">
+            <column name="user_funds" not-null="true" precision="15">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="sysFunds" optimistic-lock="true" type="big_decimal" unique="false">
+            <column name="sys_funds" not-null="true" precision="15">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="loginSta" optimistic-lock="true" type="short" unique="false">
+            <column name="login_sta" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="trdeSta" optimistic-lock="true" type="int" unique="false">
+            <column name="trde_sta" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="adminId" optimistic-lock="true" type="int" unique="false">
+            <column name="admin_id" not-null="true">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="userType" optimistic-lock="true" type="short" unique="false">
+            <column name="user_type" not-null="true">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="idCard" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="id_card" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="bankCard" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="bank_card" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="bankName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="bank_name" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="mob" optimistic-lock="true" type="string" unique="false">
+            <column length="11" name="mob" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="weixin" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="weixin" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="email" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="safePass" optimistic-lock="true" type="string" unique="false">
+            <column length="11" name="safe_pass" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="creatTime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="creat_time" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="loginIp" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="login_ip" not-null="true">
+                
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="allow1" optimistic-lock="true" type="short" unique="false">
+            <column name="allow1" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="allow2" optimistic-lock="true" type="short" unique="false">
+            <column name="allow2" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="allow3" optimistic-lock="true" type="short" unique="false">
+            <column name="allow3" not-null="true">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="allow4" optimistic-lock="true" type="short" unique="false">
+            <column name="allow4" not-null="true">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="multiplier1" optimistic-lock="true" type="int" unique="false">
+            <column name="multiplier1" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="multiplier2" optimistic-lock="true" type="int" unique="false">
+            <column name="multiplier2" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="multiplier3" optimistic-lock="true" type="int" unique="false">
+            <column name="multiplier3" not-null="true">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="multiplier4" optimistic-lock="true" type="int" unique="false">
+            <column name="multiplier4" not-null="true">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="winpoint1" optimistic-lock="true" type="double" unique="false">
+            <column name="winpoint1" not-null="true" precision="11" scale="3">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="winpoint2" optimistic-lock="true" type="double" unique="false">
+            <column name="winpoint2" not-null="true" precision="11" scale="3"/>
+        </property>
+        <property generated="never" lazy="false" name="winpoint3" optimistic-lock="true" type="double" unique="false">
+            <column name="winpoint3" not-null="true" precision="11" scale="3"/>
+        </property>
+        <property generated="never" lazy="false" name="winpoint4" optimistic-lock="true" type="double" unique="false">
+            <column name="winpoint4" not-null="true" precision="11" scale="3"/>
+        </property>
+        <property generated="never" lazy="false" name="lostpoint1" optimistic-lock="true" type="double" unique="false">
+            <column name="lostpoint1" not-null="true" precision="11" scale="3">
+              
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="lostpoint2" optimistic-lock="true" type="double" unique="false">
+            <column name="lostpoint2" not-null="true" precision="11" scale="3"/>
+        </property>
+        <property generated="never" lazy="false" name="lostpoint3" optimistic-lock="true" type="double" unique="false">
+            <column name="lostpoint3" not-null="true" precision="11" scale="3"/>
+        </property>
+        <property generated="never" lazy="false" name="lostpoint4" optimistic-lock="true" type="double" unique="false">
+            <column name="lostpoint4" not-null="true" precision="11" scale="3"/>
+        </property>
+        <property generated="never" lazy="false" name="time1" optimistic-lock="true" type="time" unique="false">
+            <column length="8" name="time1" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="time2" optimistic-lock="true" type="time" unique="false">
+            <column length="8" name="time2" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="time3" optimistic-lock="true" type="time" unique="false">
+            <column length="8" name="time3" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="time4" optimistic-lock="true" type="time" unique="false">
+            <column length="8" name="time4" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="danId" optimistic-lock="true" type="int" unique="false">
+            <column name="dan_id" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="danName" optimistic-lock="true" type="string" unique="false">
+            <column length="32" name="dan_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="danPath" optimistic-lock="true" type="int" unique="false">
+            <column name="dan_path" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="danValue" optimistic-lock="true" type="int" unique="false">
+            <column name="dan_value" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

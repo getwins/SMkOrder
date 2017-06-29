@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="stockhh" match-name="pd_admin"/>
+  <table-filter match-catalog="stockhh" match-name="pd_clear"/>
+  <table-filter match-catalog="stockhh" match-name="pd_clich"/>
+  <table-filter match-catalog="stockhh" match-name="pd_contrct"/>
+  <table-filter match-catalog="stockhh" match-name="pd_currency"/>
+  <table-filter match-catalog="stockhh" match-name="pd_entrust"/>
+  <table-filter match-catalog="stockhh" match-name="pd_git"/>
+  <table-filter match-catalog="stockhh" match-name="pd_gitprice"/>
+  <table-filter match-catalog="stockhh" match-name="pd_market"/>
+  <table-filter match-catalog="stockhh" match-name="pd_member"/>
+  <table-filter match-catalog="stockhh" match-name="pd_member_copy"/>
+  <table-filter match-catalog="stockhh" match-name="pd_pay"/>
+  <table-filter match-catalog="stockhh" match-name="pd_payment"/>
+  <table-filter match-catalog="stockhh" match-name="pd_receivables"/>
+  <table-filter match-catalog="stockhh" match-name="pd_setting"/>
+  <table-filter match-catalog="stockhh" match-name="pd_sys"/>
+  <table-filter match-catalog="stockhh" match-name="pd_user_fee"/>
+  <table-filter match-catalog="stockhh" match-name="pd_user_set"/>
+</hibernate-reverse-engineering>
