@@ -1,13 +1,17 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import java.util.Scanner;
 
 import javax.persistence.NoResultException;
 
+
 import org.hibernate.Session;
 
+import antlr.collections.List;
 import entity.PdContrct;
+import entity.PdGit;
 import entity.PdMember;
 import util.HibernateUtil;
 
@@ -16,11 +20,21 @@ public class SanitySystemIn {
 	private PdContrct contrct;
 	private int path;
 	private int openClose;
+	int num;
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
 	private Date entrustTime;
 	private double entrustPrice;
 	private Date tradeTime;
 	private double tradePrice;
-	
+
+
+	private PdGit git;
 	private Scanner sc;
 	Session session;
 	
@@ -85,12 +99,20 @@ public class SanitySystemIn {
 		this.tradeTime = tradeTime;
 	}
 	
+	public PdGit getGit() {
+		return git;
+	}
+
+	public void setGit(PdGit git) {
+		this.git = git;
+	}
+	
 	public void sanityMemberSystemIn(){
 		do{
 			try{
 				System.out.println("请输入客户号");	
 				String userName = sc.nextLine();
-				String hql = "from PdMember m where m.userName = :name";
+				String hql = "select m from PdMember m where m.userName = :name";
 				member = (PdMember)session.createQuery(hql)
 						.setParameter("name", userName)
 						.getSingleResult();
@@ -108,7 +130,7 @@ public class SanitySystemIn {
 		do{
 			try{
 				System.out.println("请输入合约代码");
-				String hql = "from PdContrct c where c.contractNo = :contractNo";
+				String hql = "select c from PdContrct c where c.contractNo = :contractNo";
 				String contractNo = sc.nextLine();
 				contrct = (PdContrct) session.createQuery(hql)
 						.setParameter("contractNo", contractNo)
@@ -180,6 +202,29 @@ public class SanitySystemIn {
 		}
 	}
 	
+	public void fetchGit(){
+		String hql = "select g from PdGit g where g.member_id = :memberId "
+				+ "and g.contrct_id = :contrctId"
+				+ "and g.path = :path";
+		int tmpPath = path;
+		if(openClose == 1){
+			tmpPath = (path == 0 ? 1 : 0);
+		}
+		
+//		TypedQuery<PdGit> query = session.createQuery(hql)
+//				.setParameter("memberId", member.getId())
+//				.setParameter("ccontrctId",contrct.getId())
+//				.setParameter("path", tmpPath);
+//		List<PdGit> gits = query.getResultList();
+		
+		List gits = (List) session.createQuery(hql)
+				.setParameter("memberId", member.getId())
+				.setParameter("ccontrctId",contrct.getId())
+				.setParameter("path", tmpPath)
+				.getResultList();
+
+		
+	}
 	public void doSystemIn(){
 		sanityMemberSystemIn();
 		sanityContractSystemIn();

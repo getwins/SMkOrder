@@ -8,7 +8,7 @@
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/stockhh</property>
   <property name="hibernate.connection.username">root</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-  <mapping resource="entity/PdMember.hbm.xml"/>
-  <mapping resource="entity/PdContrct.hbm.xml"/>
+  <mapping class="entity.PdMember"/>
+  <mapping class="entity.PdContrct"/>
  </session-factory>
 </hibernate-configuration>
