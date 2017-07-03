@@ -234,5 +234,6 @@ public class SanitySystemIn {
 		entrustPrice = sc.nextDouble();
 		sanityTradeTimeSystemIn();
 		tradePrice = sc.nextDouble();
+		sc.close();
 	}
 }

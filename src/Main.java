@@ -1,20 +1,31 @@
-import entity.*;
-import util.*;
 
 import java.util.Scanner;
-
-import javax.persistence.NoResultException;
-
-import org.hibernate.*;
 
 public class Main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SanitySystemIn sanitySystemIn = new SanitySystemIn();
-		sanitySystemIn.doSystemIn();
-		
-		
+		for(;;){
+			try{
+				SanitySystemIn sanitySystemIn = new SanitySystemIn();
+				sanitySystemIn.doSystemIn();
+				
+				MkRecord mkRec = new MkRecord(sanitySystemIn);
+				mkRec.mkRecord();
+			}
+			catch(Exception err){
+				err.printStackTrace();
+			}
+			
+			System.out.println("是否续约录入下条成交Y/n");
+			Scanner sc = new Scanner(System.in);
+			byte b = sc.nextByte();
+			if(!(b == 'Y' || b == 'y')){
+				break;
+			}
+			sc.close();
+		}
+			
 	}
 	
 
