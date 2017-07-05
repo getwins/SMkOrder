@@ -1,15 +1,11 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
-
 import javax.persistence.NoResultException;
-
-
 import org.hibernate.Session;
-
-import antlr.collections.List;
 import entity.PdContrct;
 import entity.PdGit;
 import entity.PdMember;
@@ -32,8 +28,17 @@ public class SanitySystemIn {
 	private double entrustPrice;
 	private Date tradeTime;
 	private double tradePrice;
+	
+	private double openPrice;
 
 
+	public double getOpenPrice() {
+		return openPrice;
+	}
+
+	public void setOpenPrice(double openPrice) {
+		this.openPrice = openPrice;
+	}
 	private PdGit git;
 	private Scanner sc;
 	Session session;
@@ -116,30 +121,32 @@ public class SanitySystemIn {
 				member = (PdMember)session.createQuery(hql)
 						.setParameter("name", userName)
 						.getSingleResult();
-
 			}
 			catch(NoResultException e){
 				System.out.println("该用户不存在，请再次输入");
 			}
 
 		}while(member == null);
-		
+		System.out.println(member.toString());
 	}
 	
 	public void sanityContractSystemIn(){
 		do{
-			try{
+			
 				System.out.println("请输入合约代码");
 				String hql = "select c from PdContrct c where c.contractNo = :contractNo";
 				String contractNo = sc.nextLine();
-				contrct = (PdContrct) session.createQuery(hql)
+				
+				List<PdContrct> list = session.createQuery(hql)
 						.setParameter("contractNo", contractNo)
-						.getSingleResult();
-			}
-			catch(NoResultException e){
-				System.out.println("该合约不存在，请再次输入");
-			}
+						.getResultList();
+				if(list == null)
+					System.out.println("该合约不存在，请再次输入");
+				else 
+					contrct = list.get(0);
+			
 		}while(contrct == null);	
+		System.out.println(contrct.toString());
 	}
 	
 	public void sanityPathSystemIn(){
@@ -177,7 +184,11 @@ public class SanitySystemIn {
 				}
 				break;
 			}
-			catch(ParseException e){
+			catch(InputMismatchException err){
+				err.printStackTrace();
+				System.out.println("输入的时间无效，请再次输入");
+			}
+			catch(ParseException err){
 				System.out.println("输入的时间无效，请再次输入");
 			}
 		}
@@ -196,44 +207,39 @@ public class SanitySystemIn {
 				}
 				break;
 			}
+			catch(InputMismatchException err){
+				err.printStackTrace();
+				System.out.println("输入的时间无效，请再次输入");
+			}
 			catch(ParseException e){
 				System.out.println("输入的时间无效，请再次输入");
 			}
 		}
 	}
 	
-	public void fetchGit(){
-		String hql = "select g from PdGit g where g.member_id = :memberId "
-				+ "and g.contrct_id = :contrctId"
-				+ "and g.path = :path";
-		int tmpPath = path;
-		if(openClose == 1){
-			tmpPath = (path == 0 ? 1 : 0);
-		}
-		
-//		TypedQuery<PdGit> query = session.createQuery(hql)
-//				.setParameter("memberId", member.getId())
-//				.setParameter("ccontrctId",contrct.getId())
-//				.setParameter("path", tmpPath);
-//		List<PdGit> gits = query.getResultList();
-		
-		List gits = (List) session.createQuery(hql)
-				.setParameter("memberId", member.getId())
-				.setParameter("ccontrctId",contrct.getId())
-				.setParameter("path", tmpPath)
-				.getResultList();
-
-		
-	}
 	public void doSystemIn(){
 		sanityMemberSystemIn();
 		sanityContractSystemIn();
 		sanityPathSystemIn();
 		sanityOpenCloseSystemIn();
+		
+		System.out.println("请输入成交手数");
+		num = sc.nextInt();
+		
 		sanityEntrustTimeSystemIn();
+		
+		System.out.println("请输入委托价格");
 		entrustPrice = sc.nextDouble();
+	
 		sanityTradeTimeSystemIn();
+		
+		System.out.println("请输入成交价格");
 		tradePrice = sc.nextDouble();
-		sc.close();
+		
+		if(getOpenClose() == 1){
+			System.out.println("请输入开仓价格，用来计算盈亏");
+			openPrice = sc.nextDouble();
+		}
+		
 	}
 }

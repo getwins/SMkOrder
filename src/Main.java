@@ -17,13 +17,15 @@ public class Main {
 				err.printStackTrace();
 			}
 			
-			System.out.println("是否续约录入下条成交Y/n");
+			System.out.println("是否继续录入下条成交Y/n");
+			
+			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(System.in);
-			byte b = sc.nextByte();
-			if(!(b == 'Y' || b == 'y')){
+//			byte b = sc.nextByte();
+			String s = sc.nextLine();
+			if(!(s == "Y" || s == "y")){
 				break;
 			}
-			sc.close();
 		}
 			
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
-
+import org.hibernate.Transaction;
 
 import entity.PdClich;
 import entity.PdEntrust;
@@ -15,15 +15,11 @@ public class MkRecord {
 	private SanitySystemIn inData;
 	private Session session;
 	private PdGit git;
-	PdEntrust entrust;
+	private PdEntrust entrust;
 	
 	MkRecord(SanitySystemIn inData){
 		this.inData = inData;
 		this.session = HibernateUtil.getSession();
-	}
-	
-	public boolean checkGit(){
-		return false;
 	}
 	
 	public void addEntrust(){
@@ -39,10 +35,11 @@ public class MkRecord {
 		entrust.setCreatTime(inData.getEntrustTime());
 		entrust.setGitId(git.getId());
 		entrust.setOpenprice(inData.getEntrustPrice());
-		entrust.setTradetype(0);
+		entrust.setTradetype(1);
 		entrust.setOrdertype(0);
 		session.persist(entrust);
 		session.save(entrust);
+		
 	}
 	
 	
@@ -55,7 +52,7 @@ public class MkRecord {
 		clich.setCreatTime(inData.getTradeTime());
 		clich.setClosedNum(0);
 		clich.setPc((short)inData.getOpenClose());
-		clich.setFees(25);
+		clich.setFees(inData.getContrct().getFees());
 		clich.setYk(new BigDecimal(0.0));
 		clich.setMultiplier((int)inData.getContrct().getMultiplier());
 		clich.setOpenprice(0);
@@ -65,50 +62,43 @@ public class MkRecord {
 			
 			String hql;
 			hql = "select e from PdEntrust e where e.memberId = :memberId"
-					+ "and e.contrctId = :contrctId"
-					+ "and e.pc = 0"
-					+ "and e.num = :num";
+					+ " and e.contrctId = :contrctId"
+					+ " and e.pc = 0"
+					+ " and e.num >= :num"
+					+ " order by  e.num asc";
 			List<PdEntrust> entrusts = null;
 			entrusts = session.createQuery(hql)
 					.setParameter("memberId", inData.getMember().getId())
 					.setParameter("contrctId", inData.getContrct().getId())
 					.setParameter("num", inData.getNum())
 					.getResultList();
-			if(entrusts == null){
-				hql = "select e from PdEntrust e where e.memberId = :memberId"
-						+ "and e.contrctId = :contrctId"
-						+ "and e.pc = 0"
-						+ "and e.num > :num";
-				entrusts =  session.createQuery(hql)
-						.setParameter("memberId", inData.getMember().getId())
-						.setParameter("contrctId", inData.getContrct().getId())
-						.setParameter("num", inData.getNum())
-						.getResultList();
-				
-			}
 			
-			if(entrusts == null)
+			if(entrusts.isEmpty())
 				throw new Exception("找不到对应的开仓委托");
-		
+
 			openEntrust = entrusts.get(0);
+			System.out.println("找到开仓对应的委托" + openEntrust.toString());
+			
 			if(inData.getPath() == 1){
-				double yk = (inData.getTradePrice() - inData.getEntrustPrice()) * inData.getNum() * inData.getMember().getMultiplier1();
+				double yk = (inData.getTradePrice() - inData.getOpenPrice()) * inData.getNum() * inData.getMember().getMultiplier1();
 				clich.setYk(new BigDecimal(yk));
 			}
 			else{
-				double yk = (inData.getEntrustPrice() - inData.getTradePrice()) * inData.getNum() * inData.getMember().getMultiplier1();
+				double yk = (inData.getOpenPrice() - inData.getTradePrice()) * inData.getNum() * inData.getMember().getMultiplier1();
 				clich.setYk(new BigDecimal(yk));
 			}
 	
-			clich.setOpenprice(inData.getEntrustPrice());
+			clich.setOpenprice(inData.getOpenPrice());
 			clich.setOpenEntrustId(0);
 		}
+		session.persist(clich);
+		session.save(clich);
 	}
 	
 	public void addOrUpdateGit() throws Exception{
 		String hql = "select g from PdGit g where g.memberId = :memberId "
-				+ "and g.contrctId = :contrctId"
-				+ "and g.path = :path";
+				+ " and g.contrctId = :contrctId "
+				+ " and g.path = :path";
 		
 		if(inData.getOpenClose() == 0 ){
 			Query query = session.createQuery(hql)
@@ -116,10 +106,8 @@ public class MkRecord {
 				.setParameter("contrctId", inData.getContrct().getId())
 				.setParameter("path", (short)inData.getPath());
 			List<PdGit> gits =  query.getResultList();
-			if(gits != null)
-				git = gits.get(0);
-			
-			if(git == null){
+
+			if(gits.isEmpty()){
 				git = new PdGit();
 				git.setMemberId(inData.getMember().getId());
 				git.setContrctId(inData.getContrct().getId());
@@ -128,9 +116,14 @@ public class MkRecord {
 				git.setPath((short)inData.getPath());
 				git.setPrice(inData.getTradePrice());
 				session.persist(git);
+				//session.save(git);
+			}
+			else if(gits.size() == 1){
+				git = gits.get(0);
+				git.setNum(git.getNum() + inData.getNum());
 			}
 			else{
-				git.setNum(git.getNum() + inData.getNum());
+				throw new Exception("找到大于1 的持仓记录");
 			}
 		
 		}
@@ -140,21 +133,37 @@ public class MkRecord {
 					.setParameter("memberId", inData.getMember().getId())
 					.setParameter("contrctId", inData.getContrct().getId())
 					.setParameter("path", (short)openPath);
-			List<PdGit> gits =  query.getResultList();
-			if(gits == null)
-				throw new Exception("找不到对应的持仓");
+			git = (PdGit) query.getSingleResult();
+//			List<PdGit> gits =  query.getResultList();
 			
-			git = gits.get(0);
+//			if(gits.isEmpty())
+//				throw new Exception("找不到对应的持仓");
+//			
+//			git = gits.get(0);
 			if(git.getNum() - git.getLockNum() < inData.getNum())
 				throw new Exception("持仓不足");
 			
 			git.setNum(git.getNum() - inData.getNum());
 		}
+		session.save(git);
 	}
 	
 	public void mkRecord() throws Exception{
-		addOrUpdateGit();
-		addEntrust();
-		addClich();
+		Transaction tx = session.beginTransaction();
+		try{
+			addOrUpdateGit();
+			System.out.println("保存持仓成功" + git.toString());
+			
+			addEntrust();
+			System.out.println("保存委托成功" + entrust.toString());
+			
+			addClich();
+			System.out.println("保存成交成功" + entrust.toString());
+		}
+		catch (Exception err){
+			tx.rollback();
+			throw err;
+		}
+		tx.commit();
 	}
 }
