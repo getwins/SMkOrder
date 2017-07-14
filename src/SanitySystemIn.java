@@ -114,45 +114,43 @@ public class SanitySystemIn {
 	
 	public void sanityMemberSystemIn(){
 		do{
-			try{
-				System.out.println("请输入客户号");	
-				String userName = sc.nextLine();
-				String hql = "select m from PdMember m where m.userName = :name";
-				member = (PdMember)session.createQuery(hql)
-						.setParameter("name", userName)
-						.getSingleResult();
-			}
-			catch(NoResultException e){
+			System.out.print("请输入客户号:");	
+			String userName = sc.nextLine();
+			String hql = "select m from PdMember m where m.userName = :name";
+			List<PdMember> list = session.createQuery(hql)
+					.setParameter("name", userName)
+					.list();
+			if(list.isEmpty())
 				System.out.println("该用户不存在，请再次输入");
-			}
-
+			else
+				member = list.get(0);				
 		}while(member == null);
 		System.out.println(member.toString());
 	}
 	
 	public void sanityContractSystemIn(){
 		do{
-			
-				System.out.println("请输入合约代码");
+				System.out.print("请输入合约代码:");
 				String hql = "select c from PdContrct c where c.contractNo = :contractNo";
 				String contractNo = sc.nextLine();
 				
 				List<PdContrct> list = session.createQuery(hql)
 						.setParameter("contractNo", contractNo)
-						.getResultList();
-				if(list == null)
+						.list();
+				if(list.isEmpty())
 					System.out.println("该合约不存在，请再次输入");
-				else 
+				else
 					contrct = list.get(0);
-			
+				
 		}while(contrct == null);	
 		System.out.println(contrct.toString());
 	}
 	
 	public void sanityPathSystemIn(){
 		for(;;){
-			System.out.println("请输入买卖方向，0代表买，1代表卖");
-			path = sc.nextInt();
+			System.out.print("请输入买卖方向[0代表买，1代表卖]:");
+			//path = sc.nextInt();
+			path = Integer.parseInt(sc.nextLine());
 			if(path == 0 || path == 1){
 				break;
 			}
@@ -163,8 +161,9 @@ public class SanitySystemIn {
 	
 	public void sanityOpenCloseSystemIn(){
 		for(;;){
-			System.out.println("请输入开平标志，0代表开，1代表平");
-			openClose = sc.nextInt();
+			System.out.print("请输入开平标志[0代表开，1代表平]:");
+			//openClose = sc.nextInt();
+			openClose = Integer.parseInt(sc.nextLine());
 			if(openClose == 0 || openClose == 1)
 				break;
 			System.out.println("开平标志输入不合法，请再次输入");
@@ -174,7 +173,8 @@ public class SanitySystemIn {
 	public void sanityEntrustTimeSystemIn(){
 		for(;;){
 			try{
-				System.out.println("请输入委托创建时间，时间格式yyyy-MM-dd HH:mm:ss,默认为当前时间");
+
+				System.out.print("请输入委托创建时间[时间格式yyyy-MM-dd HH:mm:ss,默认为当前时间]:");
 				String createTime = sc.nextLine();
 				if(createTime.isEmpty())
 					entrustTime = new Date();
@@ -197,7 +197,7 @@ public class SanitySystemIn {
 	public void sanityTradeTimeSystemIn(){
 		for(;;){
 			try{
-				System.out.println("请输入成交创建时间，时间格式yyyy-MM-dd HH:mm:ss,默认为当前时间");
+				System.out.print("请输入成交创建时间[时间格式yyyy-MM-dd HH:mm:ss,默认为当前时间]:");
 				String createTime = sc.nextLine();
 				if(createTime.isEmpty())
 					tradeTime = new Date();
@@ -223,23 +223,23 @@ public class SanitySystemIn {
 		sanityPathSystemIn();
 		sanityOpenCloseSystemIn();
 		
-		System.out.println("请输入成交手数");
-		num = sc.nextInt();
+		System.out.print("请输入成交手数:");
+		num = Integer.parseInt(sc.nextLine());
 		
 		sanityEntrustTimeSystemIn();
 		
-		System.out.println("请输入委托价格");
-		entrustPrice = sc.nextDouble();
+		System.out.print("请输入委托价格:");
+		entrustPrice = Double.parseDouble(sc.nextLine());
 	
 		sanityTradeTimeSystemIn();
 		
-		System.out.println("请输入成交价格");
-		tradePrice = sc.nextDouble();
+		System.out.print("请输入成交价格:");
+		tradePrice = Double.parseDouble(sc.nextLine());
 		
 		if(getOpenClose() == 1){
-			System.out.println("请输入开仓价格，用来计算盈亏");
-			openPrice = sc.nextDouble();
+			System.out.print("请输入开仓价格:");
+			openPrice = Double.parseDouble(sc.nextLine());
 		}
-		
+		//sc.close();
 	}
 }

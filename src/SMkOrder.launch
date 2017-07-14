@@ -14,6 +14,6 @@
 <stringAttribute key="org.hibernate.eclipse.launch.CFG_XML_FILE" value="\SMkOrder\src\hibernate.cfg.xml"/>
 <stringAttribute key="org.hibernate.eclipse.launch.CONFIGURATION_FACTORY" value="ANNOTATIONS"/>
 <listAttribute key="org.hibernate.eclipse.launch.FILE_MAPPINGS"/>
-<stringAttribute key="org.hibernate.eclipse.launch.HIBERNATE_VERSION" value="5.2"/>
+<stringAttribute key="org.hibernate.eclipse.launch.HIBERNATE_VERSION" value="4.0"/>
 <stringAttribute key="org.hibernate.eclipse.launchDIALECT" value="org.hibernate.dialect.MySQLDialect"/>
 </launchConfiguration>

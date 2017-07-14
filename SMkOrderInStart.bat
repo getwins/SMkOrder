@@ -1,0 +1,1 @@
+java -cp .; org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader

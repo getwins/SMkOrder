@@ -2,16 +2,26 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory name="">
+ <session-factory>
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">123456</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/stockhh</property>
+ 
+   
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/stocklhh</property>
   <property name="hibernate.connection.username">root</property>
+  
+  <!--  
+  <property name="hibernate.connection.url">jdbc:mysql://112.74.88.165:3306/stocklhh</property>
+  <property name="hibernate.connection.username">chp</property>
+  -->
+   <property name="hibernate.connection.password">123456</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <mapping class="entity.PdMember"/>
   <mapping class="entity.PdContrct"/>
   <mapping class="entity.PdGit"/>
   <mapping class="entity.PdEntrust"/>
   <mapping class="entity.PdClich"/>
+  <mapping class="entity.PdGitprice"/>
+  <mapping class="entity.PdMarket"/>
+  <mapping class="entity.PdCurrency"/>
  </session-factory>
 </hibernate-configuration>
